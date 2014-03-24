@@ -11,7 +11,16 @@ function Rolling (algo, size) {
     if (!(this instanceof Rolling)) return new Rolling(algo, size);
     Writable.call(this);
     
-    this.algo = algo;
+    if (typeof algo === 'string') {
+        this.algo = function (buf) {
+            var h = crypto.createHash(algo);
+            h.write(buf);
+            return h.digest('hex');
+        };
+    }
+    else {
+        this.algo = algo;
+    }
     this.size = size;
     this.buffered = 0;
     this.buffers = [];
@@ -51,7 +60,5 @@ Rolling.prototype._write = function (buf, enc, next) {
 };
 
 Rolling.prototype.createHash = function (buf) {
-    var h = crypto.createHash(this.algo);
-    h.write(buf);
-    this.emit('hash', h.digest('hex'));
+    this.emit('hash', this.algo(buf));
 };
