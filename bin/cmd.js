@@ -14,6 +14,13 @@ var argv = minimist(process.argv.slice(2), {
         size: 1024 * 16
     }
 });
+if (argv.h || argv.help) {
+    fs.createReadStream(__dirname + '/usage.txt')
+        .pipe(process.stdout)
+    ;
+    return;
+}
+
 var input = argv._[0] && argv._[0] !== '-'
     ? fs.createReadStream(argv._[0])
     : process.stdin

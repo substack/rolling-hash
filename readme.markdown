@@ -63,12 +63,32 @@ If `opts` is a number, use it as the `opts.size`.
 
 This event fires with `hash`, the result of the algorithm function.
 
+# usage
+
+```
+usage: rolling-hash FILE OPTIONS
+
+OPTIONS are:
+
+  -s SIZE, --size SIZE       Print a hash every SIZE bytes.
+  -a ALGO, --algorithm ALGO  Use ALGO as the hash algorithm. Default: md5
+  -e ENC, --encoding ENC     Hash encoding to use. Default: hex
+
+Use "-" as FILE to read from stdin.
+```
+
 # install
 
-With [npm](https://npmjs.org) do:
+With [npm](https://npmjs.org), to get the library do:
 
 ```
 npm install rolling-hash
+```
+
+and to get the `rolling-hash` command do:
+
+```
+npm install -g rolling-hash
 ```
 
 # license

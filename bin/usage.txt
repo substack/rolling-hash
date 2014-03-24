@@ -1,0 +1,9 @@
+usage: rolling-hash FILE OPTIONS
+
+OPTIONS are:
+
+  -s SIZE, --size SIZE       Print a hash every SIZE bytes.
+  -a ALGO, --algorithm ALGO  Use ALGO as the hash algorithm. Default: md5
+  -e ENC, --encoding ENC     Hash encoding to use. Default: hex
+
+Use "-" as FILE to read from stdin.
