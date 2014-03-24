@@ -22,7 +22,7 @@ fs.createReadStream(file).pipe(rh);
 
 output:
 
-```
+```sh
 $ node example/roll.js ~/media/vector/browserify.svg 
 6ec02fc2cbed94a6880f96f3b612f185
 30f47708feab6543bb6eb20df734554b
@@ -67,7 +67,7 @@ This event fires with `hash`, the result of the algorithm function.
 
 # usage
 
-```
+```sh
 usage: rolling-hash FILE OPTIONS
 
 OPTIONS are:
@@ -83,13 +83,13 @@ Use "-" as FILE to read from stdin.
 
 With [npm](https://npmjs.org), to get the library do:
 
-```
+```sh
 npm install rolling-hash
 ```
 
 and to get the `rolling-hash` command do:
 
-```
+```sh
 npm install -g rolling-hash
 ```
 
