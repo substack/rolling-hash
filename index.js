@@ -7,46 +7,46 @@ module.exports = Rolling;
 inherits(Rolling, Writable);
 
 function Rolling (algo, size) {
+    var self = this;
     if (!(this instanceof Rolling)) return new Rolling(algo, size);
     Writable.call(this);
     
     this.algo = algo;
     this.size = size;
-    this.offset = 0;
+    this.buffered = 0;
     this.buffers = [];
     
-    this.on('end', function () {
-        console.error('todo end');
+    this.on('finish', function () {
+        if (self.buffers.length) {
+            self.createHash(Buffer.concat(self.buffers));
+        }
+        self.buffers = null;
     });
 }
 
 Rolling.prototype._write = function (buf, enc, next) {
-    var n = this.size, i = this.offset;
-    
-    if (i % n && (i % n + buf.length < n)) {
+    if (buf.length + this.buffered < this.size) {
         this.buffers.push(buf);
-        return;
+        this.buffered += buf.length;
+        return next();
     }
-    else if (i % n) {
-        this.buffers.push(buf.slice(0, i % n));
-        
-        this.createHash(Buffer.concat(this.buffers));
+    
+    if (this.buffered) {
+        this.buffers.push(buf);
+        buf = Buffer.concat(this.buffers);
+        this.buffered = 0;
         this.buffers = [];
-        
-        buf = buf.slice(i % n);
-        
-        this.offset = 0;
     }
     
-    for (var j = 0; j < buf.length; j += n) {
-        this.createHash(buf.slice(j, j + n));
-    }
-    if (buf.length % n) {
-        var o = buf.slice(buf.length - buf.length % n);
-        this.buffers.push(buf.slice(buf.length - buf.length % n));
-        this.offset += buf.length % n;
+    for (var i = 0; i <= buf.length - this.size; i += this.size) {
+        this.createHash(buf.slice(i, i + this.size));
     }
     
+    var leftOver = buf.length % this.size;
+    if (leftOver) {
+        this.buffers.push(buf.slice(buf.length - leftOver));
+        this.buffered += leftOver;
+    }
     next();
 };
 
