@@ -2,6 +2,8 @@
 
 compute rolling hashes
 
+[![build status](https://secure.travis-ci.org/substack/rolling-hash.png)](http://travis-ci.org/substack/rolling-hash)
+
 # example
 
 every 8kb, emit an md5 hash:
