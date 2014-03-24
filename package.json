@@ -1,0 +1,37 @@
+{
+  "name": "rolling-hash",
+  "version": "0.0.0",
+  "description": "compute rolling hashes",
+  "main": "index.js",
+  "bin": {
+    "rolling-hash": "bin/cmd.js"
+  },
+  "dependencies": {
+    "inherits": "^2.0.1",
+    "minimist": "^0.0.8",
+    "readable-stream": "^1.1.11"
+  },
+  "devDependencies": {
+    "tape": "^2.11.0"
+  },
+  "scripts": {
+    "test": "tape test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/substack/rolling-hash.git"
+  },
+  "homepage": "https://github.com/substack/rolling-hash",
+  "keywords": [
+    "md5",
+    "sha1",
+    "rolling",
+    "hash"
+  ],
+  "author": {
+    "name": "James Halliday",
+    "email": "mail@substack.net",
+    "url": "http://substack.net"
+  },
+  "license": "MIT"
+}

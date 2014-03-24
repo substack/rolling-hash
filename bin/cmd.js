@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var rolling = require('../');
 var fs = require('fs');
 var minimist = require('minimist');
