@@ -6,22 +6,33 @@ var inherits = require('inherits');
 module.exports = Rolling;
 inherits(Rolling, Writable);
 
-function Rolling (algo, size) {
+function Rolling (algo, opts) {
     var self = this;
-    if (!(this instanceof Rolling)) return new Rolling(algo, size);
+    if (!(this instanceof Rolling)) return new Rolling(algo, opts);
     Writable.call(this);
+    
+    if (typeof algo === 'object') {
+        opts = algo;
+        algo = opts.algorithm;
+    }
+    if (typeof opts === 'number') {
+        opts = { size: opts };
+    }
+    if (!algo) algo = 'md5';
+    if (!opts) opts = {};
+    var enc = opts.encoding || 'buffer';
     
     if (typeof algo === 'string') {
         this.algo = function (buf) {
             var h = crypto.createHash(algo);
             h.write(buf);
-            return h.digest('hex');
+            return h.digest(enc);
         };
     }
     else {
         this.algo = algo;
     }
-    this.size = size;
+    this.size = opts.size;
     this.buffered = 0;
     this.buffers = [];
     
